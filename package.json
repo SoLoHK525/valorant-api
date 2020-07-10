@@ -1,5 +1,5 @@
 {
-  "name": "valorant-api",
+  "name": "@solohk525/valorant-api",
   "version": "0.0.1",
   "description": "A wrapper for the VALORANT API",
   "main": "lib/index.js",
