@@ -1,0 +1,20 @@
+{
+  "name": "valorant-api",
+  "version": "1.0.0",
+  "description": "A wrapper for the VALORANT API",
+  "main": "src/index.ts",
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "ts-node src/index.ts"
+  },
+  "author": "SoLoHK525",
+  "license": "ISC"
+}
