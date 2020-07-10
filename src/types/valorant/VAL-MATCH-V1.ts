@@ -6,15 +6,15 @@ import { int, long, float } from "../alias";
  * {@link https://developer.riotgames.com/apis#val-match-v1 Reference of VAL-MATCH-V1}
  */
 interface MatchDto {
-    matchInfo: Array<MatchInfoDto>;
-    players: Array<PlayerDto>;
-    teams: Array<TeamDto>;
-    roundResults: Array<RoundResultDto>;
+    matchInfo: MatchInfoDto[];
+    players: PlayerDto[];
+    teams: TeamDto[];
+    roundResults: RoundResultDto[];
 }
 
 interface MatchlistDto {
     puuid: string;
-    history: Array<MatchDto>;
+    history: MatchDto[];
 }
 
 interface MatchInfoDto {
@@ -44,8 +44,8 @@ interface PlayerDto {
 
 interface PlayerStatsDto {
     puuid: string;
-    kills: Array<KillDto>;
-    damage: Array<DamageDto>;
+    kills: KillDto[]];
+    damage: DamageDto[];
     score: int;
     economy: EconomyDto;
     ability: AbilityDto;
@@ -57,8 +57,8 @@ interface KillDto {
     killer: string;
     victim: string;
     victimLocation: LocationDto;
-    assistans: Array<string>;
-    playerLocation: Array<PlayerLocationsDto>;
+    assistans: string[];
+    playerLocation: PlayerLocationsDto[];
     finishingDamage: FinishingDamageDto;
 }
 
@@ -117,13 +117,13 @@ interface RoundResultDto {
     bombPlanter: string;
     bombDefuser: string;
     plantRoundTime: int;
-    plantPlayerLocations: Array<PlayerLocationsDto>;
+    plantPlayerLocations: PlayerLocationsDto[];
     plantLocation: LocationDto;
     plantSite: string;
     defuseRoundTime: int;
-    defusePlayerLocations: Array<PlayerLocationsDto>;
+    defusePlayerLocations: PlayerLocationsDto[];
     defuseLocation: LocationDto;
-    playerStats: Array<PlayerStatsDto>;
+    playerStats: PlayerStatsDto[];
     roundResultCode: string;
 }
 

@@ -13,67 +13,67 @@ interface ContentDTo {
     /**
      * Characters List
      */
-    characters: Array<ContentItemDto>;
+    characters: ContentItemDto[];
 
     /**
      * Maps List
      */
-    maps: Array<ContentItemDto>;
+    maps: ContentItemDto[];
 
     /**
      * Chromas List
      */
-    chromas: Array<ContentItemDto>;
+    chromas: ContentItemDto[];
 
     /**
      * Weapon Skins List
      */
-    skins: Array<ContentItemDto>;
+    skins: ContentItemDto[];
 
     /**
      * Weapon Skin Levels List
      */
-    skinLevels: Array<ContentItemDto>;
+    skinLevels: ContentItemDto[];
 
     /**
      * Equipments List
      */
-    equips: Array<ContentItemDto>;
+    equips: ContentItemDto[];
 
     /**
      * Gamemodes List
      */
-    gameModes: Array<ContentItemDto>;
+    gameModes: ContentItemDto[];
 
     /**
      * Spray Paints List
      */
-    sprays: Array<ContentItemDto>;
+    sprays: ContentItemDto[];
 
     /**
      * Spray Paints Level List
      */
-    sprayLevels: Array<ContentItemDto>;
+    sprayLevels: ContentItemDto[];
 
     /**
      * Weapon Charms List
      */
-    charms: Array<ContentItemDto>;
+    charms: ContentItemDto[];
 
     /**
      * Weapon Charm Levels List
      */
-    charmLevels: Array<ContentItemDto>;
+    charmLevels: ContentItemDto[];
 
     /**
      * Player Cards List
      */
-    playerCards: Array<ContentItemDto>;
+    playerCards: ContentItemDto[];
 
     /**
      * Player Title List
      */
-    playerTitles: Array<ContentItemDto>;
+    playerTitles: ContentItemDto[];
 }
 
 interface ContentItemDto {
