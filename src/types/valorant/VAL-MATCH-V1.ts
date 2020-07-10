@@ -1,8 +1,8 @@
-import { int, long, float } from "../alias";
+import { int, long, float } from '../alias';
 
 /**
  * The VAL-MATCH-V1 Response
- * 
+ *
  * {@link https://developer.riotgames.com/apis#val-match-v1 Reference of VAL-MATCH-V1}
  */
 interface MatchDto {
@@ -44,7 +44,7 @@ interface PlayerDto {
 
 interface PlayerStatsDto {
     puuid: string;
-    kills: KillDto[]];
+    kills: KillDto[];
     damage: DamageDto[];
     score: int;
     economy: EconomyDto;
@@ -141,5 +141,5 @@ export {
     EconomyDto,
     AbilityDto,
     TeamDto,
-    RoundResultDto
-}
+    RoundResultDto,
+};

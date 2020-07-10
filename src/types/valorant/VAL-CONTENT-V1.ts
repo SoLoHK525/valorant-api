@@ -1,8 +1,8 @@
-import { LocalizedNamesDto } from "../general";
+import { LocalizedNamesDto } from '../general';
 
 /**
  * Response of the Content V1 Endpoint
- * 
+ *
  */
 interface ContentDTo {
     /**
@@ -93,7 +93,4 @@ interface ContentItemDto {
     assetName: string;
 }
 
-export {
-    ContentDTo,
-    ContentItemDto
-}
+export { ContentDTo, ContentItemDto };

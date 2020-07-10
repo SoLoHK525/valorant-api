@@ -1,8 +1,9 @@
 {
   "name": "valorant-api",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A wrapper for the VALORANT API",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "dependencies": {
     "axios": "^0.19.2"
   },
@@ -17,9 +18,15 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "ts-node src/index.ts",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
   },
+  "keywords": ["Valorant", "Riot", "Wrapper", "API"],
+  "repository": {
+     "type": "git",
+     "url": "git+https://github.com/solohk525/valorant-api.git"
+   },
+  "files": ["lib/**/*"],
   "author": "SoLoHK525",
   "license": "ISC"
 }
