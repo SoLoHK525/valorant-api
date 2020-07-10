@@ -7,13 +7,18 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
+    "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.9.6"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "ts-node src/index.ts"
+    "test": "ts-node src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "author": "SoLoHK525",
   "license": "ISC"
