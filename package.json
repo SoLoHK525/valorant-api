@@ -1,6 +1,6 @@
 {
   "name": "node-valorant-api",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A NodeJS wrapper for the VALORANT API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -21,12 +21,19 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
   },
-  "keywords": ["Valorant", "Riot", "Wrapper", "API"],
+  "keywords": [
+    "Valorant",
+    "Riot",
+    "Wrapper",
+    "API"
+  ],
   "repository": {
-     "type": "git",
-     "url": "git+https://github.com/solohk525/valorant-api.git"
-   },
-  "files": ["lib/**/*"],
+    "type": "git",
+    "url": "git+https://github.com/solohk525/valorant-api.git"
+  },
+  "files": [
+    "lib/**/*"
+  ],
   "author": "SoLoHK525",
   "license": "ISC"
 }
