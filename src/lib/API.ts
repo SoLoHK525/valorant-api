@@ -23,6 +23,7 @@ class API {
 
             request.baseURL = `https://${this.region.endpoint}.api.riotgames.com/`;
             request.headers['X-Riot-Token'] = this.token;
+            request.headers['Content-Type'] = 'application/json;charset=UTF-8';
 
             return request;
         });
@@ -34,7 +35,11 @@ class API {
             (error) => {
                 if (error.response?.data?.status) {
                     console.error(
-                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message}`,
+                        `Server rejected request:
+                        ${error.response.data.status.status_code}
+                        ${error.response.data.status.message}
+                        \n 
+                        Please refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
                     );
                 }
 

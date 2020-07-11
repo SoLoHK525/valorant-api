@@ -2,4 +2,6 @@ type int = number;
 type long = number;
 type float = number;
 
-export { int, long, float };
+type puuid = string;
+
+export { int, long, float, puuid };

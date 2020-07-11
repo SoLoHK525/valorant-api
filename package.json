@@ -1,7 +1,7 @@
 {
-  "name": "@solohk525/valorant-api",
-  "version": "0.0.1",
-  "description": "A wrapper for the VALORANT API",
+  "name": "node-valorant-api",
+  "version": "0.0.2",
+  "description": "A NodeJS wrapper for the VALORANT API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
