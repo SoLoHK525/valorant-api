@@ -31,12 +31,12 @@ API.setRegion(Regions.NA).setToken("Your token here").getContent().then(content 
 
 Typescript:
 ```
-import { API, Regions } from "@solohk525/valorant-api";
+import { API, Regions } from "node-valorant-api";
 
 API.setRegion(Regions.NA).setToken("Your token here").getContent().then(content => {
     console.log(content.characters);
 })
 ```
 
-[npm-image]: https://img.shields.io/npm/v/@solohk525/valorant-api.svg
-[npm-url]: https://npmjs.org/package/@solohk525/valorant-api
+[npm-image]: https://img.shields.io/npm/v/node-valorant-api.svg
+[npm-url]: https://npmjs.org/package/node-valorant-api
