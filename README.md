@@ -1,4 +1,4 @@
-# valorant-api
+# node-valorant-api
 
 > A NodeJs wrapper for the Riot VALORANT API
 
@@ -10,7 +10,7 @@ As of 2020/07/10, the official VALORANT API is not yet released to the public, s
 ## Install
 
 ```bash
-npm i @solohk525/valorant-api
+npm i node-valorant-api
 ```
 
 ## Supported methods:
