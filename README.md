@@ -14,6 +14,8 @@ npm i node-valorant-api
 ```
 
 ## Supported methods:
+> All API methods will return a promise containing the return data, for detailed information about the Promise API, please refer to https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
 - getContent()
 - getMatchById(matchid)
 - getMatchesByPuuid(puuid)
