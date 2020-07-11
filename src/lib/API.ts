@@ -35,11 +35,7 @@ class API {
             (error) => {
                 if (error.response?.data?.status) {
                     console.error(
-                        `Server rejected request:
-                        ${error.response.data.status.status_code}
-                        ${error.response.data.status.message}
-                        \n 
-                        Please refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
+                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message} \n Please refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
                     );
                 }
 
