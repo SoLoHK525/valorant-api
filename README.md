@@ -34,20 +34,24 @@ npm i node-valorant-api
 
 ##### CommonJs:
 ```js
-const { API, Regions } = require("@solohk525/valorant-api");
+const { API, Regions } = require("node-valorant-api");
 
-API.setRegion(Regions.NA).setToken("Your token here").getContent().then(content => {
+const ValorantAPI = API.setRegion(Regions.NA).setToken("Your token here");
+
+ValorantAPI.getContent().then(content => {
     console.log(content.characters);
-})
+});
 ```
 
 ##### Typescript:
 ```ts
 import { API, Regions } from "node-valorant-api";
 
-API.setRegion(Regions.NA).setToken("Your token here").getContent().then(content => {
+const ValorantAPI = API.setRegion(Regions.NA).setToken("Your token here");
+
+ValorantAPI.getContent().then(content => {
     console.log(content.characters);
-})
+});
 ```
 
 [npm-image]: https://img.shields.io/npm/v/node-valorant-api.svg
