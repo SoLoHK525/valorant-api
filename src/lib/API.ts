@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 import { Region } from '../types/region';
 import { ContentDTo } from '../types/valorant/VAL-CONTENT-V1';
-import { MatchDto, MatchlistDto } from '../types/valorant/VAL-MATCH-V1';
+import { MatchesMatchDto, MatchlistDto } from '../types/valorant/VAL-MATCH-V1';
 
 class API {
     private request: AxiosInstance;
@@ -44,11 +44,23 @@ class API {
         );
     }
 
+    /**
+     * Set the target region when querying the API
+     *
+     * @param {Region} region Target Region: APAC | BR | EU | KR | LATAM | NA | PBE1
+     * @return {API} the API instance
+     */
     public setRegion(region: Region) {
         this.region = region;
         return this;
     }
 
+    /**
+     * Set the token (API Key)
+     *
+     * @param {string} region The token (API Key) registered at https://developer.riotgames.com/
+     * @return {API} the API instance
+     */
     public setToken(token: string) {
         this.token = token;
         return this;
@@ -86,12 +98,12 @@ class API {
      *
      * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatch Reference of VAL-MATCH-V1}
      */
-    public getMatchById(matchId: string): Promise<MatchDto> {
+    public getMatchById(matchId: string): Promise<MatchesMatchDto> {
         return this.request.get(`/val/match/v1/matches/${matchId}`);
     }
 
     /**
-     * Fetch match by the match id
+     * Fetch match history of a player by Player UUID (puuid)
      *
      * API Endpoint: `GET /val/match/v1/matchlists/by-puuid/{puuid}`
      *
@@ -102,7 +114,7 @@ class API {
      *
      * @returns A promise containing the VAL-MATCH-V1 API Response: `{@link MatchlistDto}`
      *
-     * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatch Reference of VAL-MATCH-V1}
+     * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist Reference of VAL-MATCH-V1}
      */
     public getMatchesByPuuid(puuid: string): Promise<MatchlistDto> {
         return this.request.get(`/val/match/v1/matchlists/by-puuid/${puuid}`);

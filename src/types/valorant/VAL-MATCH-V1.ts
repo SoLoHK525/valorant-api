@@ -1,11 +1,11 @@
 import { int, long, float, puuid } from '../alias';
 
 /**
- * The VAL-MATCH-V1 Response
+ * Response of GET /val/match/v1/matches/{matchId}
  *
- * {@link https://developer.riotgames.com/apis#val-match-v1 Reference of VAL-MATCH-V1}
+ * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatch reference}
  */
-interface MatchDto {
+interface MatchesMatchDto {
     /**
      * List of matches
      */
@@ -27,6 +27,11 @@ interface MatchDto {
     roundResults: RoundResultDto[];
 }
 
+/**
+ * Response of GET /val/match/v1/matchlists/by-puuid/{puuid}
+ *
+ * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist reference}
+ */
 interface MatchlistDto {
     /**
      * Player UUID
@@ -36,7 +41,13 @@ interface MatchlistDto {
     /**
      * List of history matches of the player
      */
-    history: MatchDto[];
+    history: MatchListsMatchDto[];
+}
+
+interface MatchListsMatchDto {
+    matchId: string;
+    gameStartTime: long;
+    teamId: string;
 }
 
 interface MatchInfoDto {
@@ -208,7 +219,7 @@ interface KillDto {
     /**
      * Location of all players when this kill occurs
      */
-    playerLocation: PlayerLocationsDto[];
+    playerLocations: PlayerLocationsDto[];
 
     /**
      * The finishing damage which occur this kill event
@@ -234,7 +245,7 @@ interface PlayerLocationsDto {
     /**
      * Player UUID
      */
-    ppuid: puuid;
+    puuid: puuid;
 
     /**
      * Radians of the player's viewing angle
@@ -456,8 +467,9 @@ interface RoundResultDto {
 }
 
 export {
-    MatchDto,
+    MatchesMatchDto,
     MatchlistDto,
+    MatchListsMatchDto,
     MatchInfoDto,
     PlayerDto,
     PlayerStatsDto,
