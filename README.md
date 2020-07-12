@@ -39,7 +39,11 @@ const { API, Regions } = require("node-valorant-api");
 const ValorantAPI = API.setRegion(Regions.NA).setToken("Your token here");
 
 ValorantAPI.getContent().then(content => {
+    //Handle API Response
     console.log(content.characters);
+}).catch(err => {
+    //Handle API Exeception
+    throw err;
 });
 ```
 
@@ -50,7 +54,11 @@ import { API, Regions } from "node-valorant-api";
 const ValorantAPI = API.setRegion(Regions.NA).setToken("Your token here");
 
 ValorantAPI.getContent().then(content => {
+    //Handle API Response
     console.log(content.characters);
+}).catch(err => {
+    //Handle API Exeception
+    throw err;
 });
 ```
 
