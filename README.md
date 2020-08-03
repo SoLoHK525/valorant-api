@@ -52,7 +52,7 @@ ValorantAPI.getContent(Locales["en-GB"]).then(content => {
 
 ##### Typescript:
 ```ts
-import { API, Regions } from "node-valorant-api";
+import { API, Regions, Locales } from "node-valorant-api";
 
 const ValorantAPI = API.setRegion(Regions.NA).setKey("Your API Key Here");
 
