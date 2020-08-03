@@ -2,7 +2,7 @@ import { Region } from '../types/region';
 
 class Regions {
     public static APAC: Region = {
-        endpoint: 'apac',
+        endpoint: 'ap',
     };
 
     public static BR: Region = {
@@ -30,4 +30,4 @@ class Regions {
     };
 }
 
-export { Regions };
+export default Regions;

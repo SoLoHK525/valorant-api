@@ -3,11 +3,13 @@ import axios, { AxiosInstance } from 'axios';
 import { Region } from '../types/region';
 import { ContentDTo } from '../types/valorant/VAL-CONTENT-V1';
 import { MatchesMatchDto, MatchlistDto } from '../types/valorant/VAL-MATCH-V1';
+import { LocalizedNamesDto } from '../types/general';
+import { Locale } from '../types/alias';
 
 class API {
     private request: AxiosInstance;
 
-    private token: string = '';
+    private key: string = '';
     private region: Region | null = null;
 
     constructor() {
@@ -17,12 +19,12 @@ class API {
             if (this.region === null) {
                 throw new Error('No region is classified');
             }
-            if (this.token.length === 0) {
-                throw new Error('No token is classified');
+            if (this.key.length === 0) {
+                throw new Error('No key is classified');
             }
 
             request.baseURL = `https://${this.region.endpoint}.api.riotgames.com/`;
-            request.headers['X-Riot-Token'] = this.token;
+            request.headers['X-Riot-Token'] = this.key;
             request.headers['Content-Type'] = 'application/json;charset=UTF-8';
 
             return request;
@@ -58,11 +60,11 @@ class API {
     /**
      * Set the token (API Key)
      *
-     * @param {string} region The token (API Key) registered at https://developer.riotgames.com/
+     * @param {string} region The API Key registered at https://developer.riotgames.com/
      * @return {API} the API instance
      */
-    public setToken(token: string) {
-        this.token = token;
+    public setKey(key: string) {
+        this.key = key;
         return this;
     }
 
@@ -80,8 +82,14 @@ class API {
      *
      * {@link https://developer.riotgames.com/apis#val-content-v1/GET_getContent Reference of VAL-CONTENT-V1}
      */
-    public getContent(): Promise<ContentDTo> {
-        return this.request.get('/val/content/v1/contents');
+    public getContent(locale?: Locale): Promise<ContentDTo> {
+        let url = '/val/content/v1/contents';
+
+        if (locale !== undefined) {
+            url += `?locale=${encodeURIComponent(locale)}`;
+        }
+
+        return this.request.get(url);
     }
 
     /**

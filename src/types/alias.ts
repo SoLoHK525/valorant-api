@@ -4,4 +4,6 @@ type float = number;
 
 type puuid = string;
 
-export { int, long, float, puuid };
+type Locale = string;
+
+export { int, long, float, puuid, Locale };
