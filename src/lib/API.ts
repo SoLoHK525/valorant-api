@@ -1,28 +1,43 @@
 import axios, { AxiosInstance } from 'axios';
 
 import { Region } from '../types/region';
-import { ContentDTo } from '../types/valorant/VAL-CONTENT-V1';
-import { MatchesMatchDto, MatchlistDto } from '../types/valorant/VAL-MATCH-V1';
-import { LocalizedNamesDto } from '../types/general';
-import { Locale } from '../types/alias';
+
+import AccountV1 from './riot/ACCOUNT-V1';
+import ContentV1 from './valorant/VAL-CONTENT-V1';
+import MatchV1 from './valorant/VAL-MATCH-V1';
+import Regions from './Regions';
 
 class API {
-    private request: AxiosInstance;
+    public AccountV1 = new AccountV1(this);
+    public ContentV1 = new ContentV1(this);
+    public MatchV1 = new MatchV1(this);
+
+    public request: AxiosInstance;
 
     private key: string = '';
-    private region: Region | null = null;
+    private region: Region = Regions.NA;
 
-    constructor() {
+    /**
+     * @constructor
+     *
+     * @param {Region} region Target Region: APAC | BR | EU | KR | LATAM | NA | PBE1
+     * @param {string} key The API Key registered at https://developer.riotgames.com/
+     * @return {this} the API instance
+     */
+    constructor(region: Region, key: string) {
         this.request = axios.create();
 
-        this.request.interceptors.request.use((request) => {
-            if (this.region === null) {
-                throw new Error('No region is classified');
-            }
-            if (this.key.length === 0) {
-                throw new Error('No key is classified');
-            }
+        if (region === null) {
+            throw new Error('No region is classified');
+        }
+        if (key.length === 0) {
+            throw new Error('No key is classified');
+        }
 
+        this.region = region;
+        this.key = key;
+
+        this.request.interceptors.request.use((request) => {
             request.baseURL = `https://${this.region.endpoint}.api.riotgames.com/`;
             request.headers['X-Riot-Token'] = this.key;
             request.headers['Content-Type'] = 'application/json;charset=UTF-8';
@@ -37,7 +52,7 @@ class API {
             (error) => {
                 if (error.response?.data?.status) {
                     console.error(
-                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message} \n Please refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
+                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message}\nPlease refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
                     );
                 }
 
@@ -47,86 +62,13 @@ class API {
     }
 
     /**
-     * Set the target region when querying the API
+     * Get the target region when querying the API
      *
-     * @param {Region} region Target Region: APAC | BR | EU | KR | LATAM | NA | PBE1
-     * @return {API} the API instance
+     * @return {Region} the defined region
      */
-    public setRegion(region: Region) {
-        this.region = region;
-        return this;
-    }
-
-    /**
-     * Set the token (API Key)
-     *
-     * @param {string} region The API Key registered at https://developer.riotgames.com/
-     * @return {API} the API instance
-     */
-    public setKey(key: string) {
-        this.key = key;
-        return this;
-    }
-
-    /**
-     * Fetch all the content that VALORANT offers
-     *
-     * API Endpoint: `/val/content/v1/contents`
-     *
-     * @description Get content optionally filtered by locale
-     *
-     * @remark
-     * **`Requires API Key`**
-     *
-     * @returns A promise containing the ContentV1 API Response: `{@link ContentDTo}`
-     *
-     * {@link https://developer.riotgames.com/apis#val-content-v1/GET_getContent Reference of VAL-CONTENT-V1}
-     */
-    public getContent(locale?: Locale): Promise<ContentDTo> {
-        let url = '/val/content/v1/contents';
-
-        if (locale !== undefined) {
-            url += `?locale=${encodeURIComponent(locale)}`;
-        }
-
-        return this.request.get(url);
-    }
-
-    /**
-     * Fetch match by the match id
-     *
-     * API Endpoint: `GET /val/match/v1/matches/{matchId}`
-     *
-     * @description Get match by id
-     *
-     * @remark
-     * **`Requires API Key`**
-     *
-     * @returns A promise containing the VAL-MATCH-V1 API Response: `{@link MatchDto}`
-     *
-     * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatch Reference of VAL-MATCH-V1}
-     */
-    public getMatchById(matchId: string): Promise<MatchesMatchDto> {
-        return this.request.get(`/val/match/v1/matches/${matchId}`);
-    }
-
-    /**
-     * Fetch match history of a player by Player UUID (puuid)
-     *
-     * API Endpoint: `GET /val/match/v1/matchlists/by-puuid/{puuid}`
-     *
-     * @description Get matchlist for games played by puuid
-     *
-     * @remark
-     * **`Requires API Key`**
-     *
-     * @returns A promise containing the VAL-MATCH-V1 API Response: `{@link MatchlistDto}`
-     *
-     * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist Reference of VAL-MATCH-V1}
-     */
-    public getMatchesByPuuid(puuid: string): Promise<MatchlistDto> {
-        return this.request.get(`/val/match/v1/matchlists/by-puuid/${puuid}`);
+    public getRegion(): Region {
+        return this.region;
     }
 }
 
-export = new API();
+export default API;

@@ -28,6 +28,21 @@ class Regions {
     public static PBE1: Region = {
         endpoint: 'pbe1',
     };
+
+    /**
+     * Regions for the Account API
+     */
+    public static ASIA: Region = {
+        endpoint: 'asia',
+    };
+
+    public static AMERICAS: Region = {
+        endpoint: 'americas',
+    };
+
+    public static EUROPE: Region = {
+        endpoint: 'europe',
+    };
 }
 
 export default Regions;
