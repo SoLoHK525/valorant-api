@@ -56,10 +56,9 @@ const { API, Regions, Locales } = require("node-valorant-api");
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
-const valorant = new API(Regions.NA, APIKey); // An API instance for Valorant query
-
-// Since the Account API only support Regions at ASIA | AMERICAS | EUROPE
-const account = new API(Regions.ASIA, APIKey); // An API instance for Account query
+// The third parameter is the Region for the Account API
+// choose the one that is the closest to you
+const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instance for Valorant query
 
 // Example of the Usage of VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
@@ -68,7 +67,7 @@ valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
 
 // Example of the Usage of ACCOUNT-V1 and VAL-MATCH-V1 API
 // !!! The MatchV1 API requires Production API Key
-account.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
+valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
     // Get the puuid by RiotID, then fetch all the matches of the player
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
         console.log(matches); // this should print the matches of the account
@@ -82,10 +81,9 @@ import { API, Regions, Locales } from "node-valorant-api";
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
-const valorant = new API(Regions.NA, APIKey); // An API instance for Valorant query
-
-// Since the Account API only support Regions at ASIA | AMERICAS | EUROPE
-const account = new API(Regions.ASIA, APIKey); // An API instance for Account query
+// The third parameter is the Region for the Account API
+// choose the one that is the closest to you
+const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instance for Valorant query
 
 // Example of the Usage of VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
@@ -94,7 +92,7 @@ valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
 
 // Example of the Usage of ACCOUNT-V1 and VAL-MATCH-V1 API
 // !!! The MatchV1 API requires Production API Key
-account.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
+valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
     // Get the puuid by RiotID, then fetch all the matches of the player
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
         console.log(matches); // this should print the matches of the account
