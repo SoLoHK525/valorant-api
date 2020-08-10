@@ -30,7 +30,7 @@ class API {
      * @param {Region} accountRegion Target Region for Account API: AMERICAS | ASIA | EUROPE
      * @return {this} the API instance
      */
-    constructor(region: Region, key: string, accountRegion: Region) {
+    constructor(region: Region, key: string, accountRegion?: Region) {
         this.#request = axios.create();
 
         if (region === null) {
@@ -40,7 +40,7 @@ class API {
             throw new Error('No key is classified');
         }
 
-        if(accountRegion === null){
+        if(accountRegion === undefined){
             this.accountRegion = Regions.AMERICAS;
         }else{
             this.accountRegion = accountRegion;
