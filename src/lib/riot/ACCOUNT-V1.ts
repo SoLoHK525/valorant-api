@@ -1,8 +1,67 @@
-import { API } from '../..';
 import { AccountDto, ActiveShardDto } from '../../types/riot/ACCOUNT-V1';
 import { Region } from '../../types/region';
 import Regions from '../Regions';
 import Controller from '../Controller';
+import Account from '../Wrapper/account';
+
+interface AccountV1 {
+    /**
+     * Fetch account By Puuid
+     *
+     * API Endpoint: `GET /riot/account/v1/accounts/by-puuid/{puuid}`
+     *
+     * @description Get match by id
+     *
+     * @remark
+     * **`Requires Development API Key`**
+     *
+     * @remark
+     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
+     *
+     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link AccountDto}`
+     *
+     * {@link https://developer.riotgames.com/apis#account-v1/GET_getByPuuid Reference of ACCOUNT-V1}
+     */
+    getAccountByPuuid(puuid: string): Promise<AccountDto>;
+
+     /**
+     * Fetch account By Riot ID
+     *
+     * API Endpoint: `GET /riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}`
+     *
+     * @description Get account By Riot ID
+     *
+     * @remark
+     * **`Requires Development API Key`**
+     *
+     * @remark
+     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
+     *
+     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link AccountDto}`
+     *
+     * {@link https://developer.riotgames.com/apis#account-v1/GET_getByRiotId Reference of ACCOUNT-V1}
+     */
+    getAccountByRiotID(gameName: string, tagLine: string): Promise<Account>;
+
+    /**
+     * Fetch active shard by Puuid
+     *
+     * API Endpoint: `GET /riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}`
+     *
+     * @description Get active shard by Puuid
+     *
+     * @remark
+     * **`Requires Development API Key`**
+     *
+     * @remark
+     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
+     *
+     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link ActiveShardDto}`
+     *
+     * {@link https://developer.riotgames.com/apis#account-v1/GET_getActiveShard Reference of ACCOUNT-V1}
+     */
+    getActiveShardByPuuid(puuid: string): Promise<ActiveShardDto>;
+}
 
 const regionToAccountRegion = (region: Region): Region => {
     switch (region) {
@@ -23,71 +82,28 @@ const regionToAccountRegion = (region: Region): Region => {
     }
 };
 
-export default class AccountV1 extends Controller {
-    /**
-     * Fetch account By Puuid
-     *
-     * API Endpoint: `GET /riot/account/v1/accounts/by-puuid/{puuid}`
-     *
-     * @description Get match by id
-     *
-     * @remark
-     * **`Requires Development API Key`**
-     *
-     * @remark
-     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
-     *
-     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link AccountDto}`
-     *
-     * {@link https://developer.riotgames.com/apis#account-v1/GET_getByPuuid Reference of ACCOUNT-V1}
-     */
+class AccountV1 extends Controller {
     getAccountByPuuid(puuid: string): Promise<AccountDto> {
         puuid = encodeURIComponent(puuid);
-
-        return this.request.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
+        
+        const request = this.request.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>
+        
+        return request.then(account => {
+            return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
+        })
     }
 
-    /**
-     * Fetch account By Riot ID
-     *
-     * API Endpoint: `GET /riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}`
-     *
-     * @description Get account By Riot ID
-     *
-     * @remark
-     * **`Requires Development API Key`**
-     *
-     * @remark
-     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
-     *
-     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link AccountDto}`
-     *
-     * {@link https://developer.riotgames.com/apis#account-v1/GET_getByRiotId Reference of ACCOUNT-V1}
-     */
-    getAccountByRiotID(gameName: string, tagLine: string): Promise<AccountDto> {
+    getAccountByRiotID(gameName: string, tagLine: string): Promise<Account> {
         gameName = encodeURIComponent(gameName);
         tagLine = encodeURIComponent(tagLine);
 
-        return this.request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>;
+        const request = this.instance.setTempRegion(this.instance.getAccountRegion()).request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>
+        
+        return request.then(account => {
+            return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
+        })
     }
 
-    /**
-     * Fetch active shard by Puuid
-     *
-     * API Endpoint: `GET /riot/account/v1/active-shards/by-game/{game}/by-puuid/{puuid}`
-     *
-     * @description Get active shard by Puuid
-     *
-     * @remark
-     * **`Requires Development API Key`**
-     *
-     * @remark
-     * *`The wrapper will transform your current region to AccountAPI Region: AMERICAS | ASIA | EUROPE`*
-     *
-     * @returns A promise containing the ACCOUNT-V1 API Response: `{@link ActiveShardDto}`
-     *
-     * {@link https://developer.riotgames.com/apis#account-v1/GET_getActiveShard Reference of ACCOUNT-V1}
-     */
     getActiveShardByPuuid(puuid: string): Promise<ActiveShardDto> {
         puuid = encodeURIComponent(puuid);
 
@@ -96,3 +112,5 @@ export default class AccountV1 extends Controller {
         >;
     }
 }
+
+export default AccountV1;
