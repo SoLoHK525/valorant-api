@@ -24,7 +24,7 @@ interface AccountV1 {
      */
     getAccountByPuuid(puuid: string): Promise<AccountDto>;
 
-     /**
+    /**
      * Fetch account By Riot ID
      *
      * API Endpoint: `GET /riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}`
@@ -85,23 +85,25 @@ const regionToAccountRegion = (region: Region): Region => {
 class AccountV1 extends Controller {
     getAccountByPuuid(puuid: string): Promise<AccountDto> {
         puuid = encodeURIComponent(puuid);
-        
-        const request = this.request.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>
-        
-        return request.then(account => {
+
+        const request = this.request.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
+
+        return request.then((account) => {
             return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
-        })
+        });
     }
 
     getAccountByRiotID(gameName: string, tagLine: string): Promise<Account> {
         gameName = encodeURIComponent(gameName);
         tagLine = encodeURIComponent(tagLine);
 
-        const request = this.instance.setTempRegion(this.instance.getAccountRegion()).request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>
-        
-        return request.then(account => {
+        const request = this.instance
+            .setTempRegion(this.instance.getAccountRegion())
+            .request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>;
+
+        return request.then((account) => {
             return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
-        })
+        });
     }
 
     getActiveShardByPuuid(puuid: string): Promise<ActiveShardDto> {

@@ -11,14 +11,10 @@ class API {
     public AccountV1 = new AccountV1(this);
     public ContentV1 = new ContentV1(this);
     public MatchV1 = new MatchV1(this);
-    public get request(){
-        return this.#request;
-    }
 
     private region: Region;
     private accountRegion: Region;
-    
-    #request: AxiosInstance;
+
     #key: string = '';
     #originalRegion: Region | null = null;
 
@@ -31,8 +27,6 @@ class API {
      * @return {this} the API instance
      */
     constructor(region: Region, key: string, accountRegion?: Region) {
-        this.#request = axios.create();
-
         if (region === null) {
             throw new Error('No region is classified');
         }
@@ -40,35 +34,37 @@ class API {
             throw new Error('No key is classified');
         }
 
-        if(accountRegion === undefined){
+        if (accountRegion === undefined) {
             this.accountRegion = Regions.AMERICAS;
-        }else{
+        } else {
             this.accountRegion = accountRegion;
         }
 
         this.region = region;
         this.#key = key;
+    }
 
-        this.#request.interceptors.request.use((request) => {
-            request.baseURL = `https://${this.region.endpoint}.api.riotgames.com/`;
-            request.headers['X-Riot-Token'] = this.#key;
-            request.headers['Content-Type'] = 'application/json;charset=UTF-8';
-
-            return request;
+    public get request() {
+        const request = axios.create({
+            baseURL: `https://${this.region.endpoint}.api.riotgames.com/`,
+            headers: {
+                'X-Riot-Token': this.#key,
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
         });
 
-        this.#request.interceptors.response.use(
+        request.interceptors.response.use(
             (response) => {
-                if(this.#originalRegion !== null){
-                    this.region = region;
+                if (this.#originalRegion !== null) {
+                    this.region = this.#originalRegion;
                     this.#originalRegion = null;
                 }
 
                 return response.data;
             },
             (error) => {
-                if(this.#originalRegion !== null){
-                    this.region = region;
+                if (this.#originalRegion !== null) {
+                    this.region = this.#originalRegion;
                     this.#originalRegion = null;
                 }
 
@@ -81,6 +77,8 @@ class API {
                 throw error;
             },
         );
+
+        return request;
     }
 
     public setTempRegion(region: Region): this {

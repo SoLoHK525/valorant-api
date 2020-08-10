@@ -10,7 +10,7 @@ abstract class Controller {
         this.#instance = instance;
     }
 
-    protected get instance(){
+    protected get instance() {
         return this.#instance;
     }
 }
