@@ -1,7 +1,7 @@
-import { AccountDto, ActiveShardDto } from '../../types/riot/ACCOUNT-V1';
 import { Region } from '../../types/region';
-import Regions from '../Regions';
+import { AccountDto, ActiveShardDto } from '../../types/riot/ACCOUNT-V1';
 import Controller from '../Controller';
+import Regions from '../Regions';
 import Account from '../Wrapper/account';
 
 interface AccountV1 {
@@ -98,7 +98,7 @@ class AccountV1 extends Controller {
         tagLine = encodeURIComponent(tagLine);
 
         const request = this.instance
-            .setTempRegion(this.instance.getAccountRegion())
+            .setTempRegion(this.instance.accountRegion)
             .request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>;
 
         return request.then((account) => {
