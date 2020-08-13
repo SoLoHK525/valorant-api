@@ -6,7 +6,7 @@ A NodeJs wrapper for the Riot VALORANT API
 [![NPM Version][npm-image]][npm-url]
 
 ## Disclaimer:
-> As of 2020/08/04, the VAL-MATCH-V1 API is not yet released to the public. Since I don't have the key to test the API, the functionality of this API wrapper is not yet confirmed. You are welcome to open issues regarding problems/bugs/improvements of this wrapper.
+> As of 2020/08/13, the VAL-MATCH-V1 API is not yet released to the public. Since I don't have the key to test the API, the functionality of this API wrapper is not yet confirmed. You are welcome to open issues regarding problems/bugs/improvements of this wrapper.
 
 > However, I have tested the VAL-CONTENT-V1 API which works fine :D
 
