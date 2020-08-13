@@ -6,18 +6,18 @@ A NodeJs wrapper for the Riot VALORANT API
 [![NPM Version][npm-image]][npm-url]
 
 ## Disclaimer:
-> As of 2020/08/04, the VAL-MATCH-V1 is not yet released to the public, since I don't have the key to test the API, the functionality of this API wrapper is not yet confirmed. You are welcomed to open issues regards the problem/bugs/improvements of this wrapper.
+> As of 2020/08/04, the VAL-MATCH-V1 API is not yet released to the public. Since I don't have the key to test the API, the functionality of this API wrapper is not yet confirmed. You are welcome to open issues regarding problems/bugs/improvements of this wrapper.
 
-> However, the I have tested the VAL-CONTENT-V1 API which works fine :D 
+> However, I have tested the VAL-CONTENT-V1 API which works fine :D
 
-## Install
+## Installation
 
 ```bash
 npm i node-valorant-api
 ```
 
 ## Supported APIs:
-> All API methods will return a promise containing the return data, for detailed information about the Promise API, please refer to https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise
+> All API methods will return a promise containing the return data. For detailed information about the Promise API, please refer to https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 > ### [**ACCOUNT-V1**](https://developer.riotgames.com/apis#account-v1)
 - [getAccountByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getByPuuid)
@@ -60,17 +60,17 @@ const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 // choose the one that is the closest to you
 const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instance for Valorant query
 
-// Example of the Usage of VAL-CONTENT-V1 API
+// Example usage of the VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
     console.log(content.characters.map(char => { return char.name })); //print all the character name in en-US
 });
 
-// Example of the Usage of ACCOUNT-V1 and VAL-MATCH-V1 API
-// !!! The MatchV1 API requires Production API Key
+// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API
+// !!! The MatchV1 API requires a Production API Key
 valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
-    // Get the puuid by RiotID, then fetch all the matches of the player
+    // Get the puuid by RiotID, then fetch all of the player's matches
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
-        console.log(matches); // this should print the matches of the account
+        console.log(matches); // this should print the account's matches
     })
 });
 ```
@@ -85,17 +85,17 @@ const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 // choose the one that is the closest to you
 const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instance for Valorant query
 
-// Example of the Usage of VAL-CONTENT-V1 API
+// Example usage of the VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
     console.log(content.characters.map(char => { return char.name })); //print all the character name in en-US
 });
 
-// Example of the Usage of ACCOUNT-V1 and VAL-MATCH-V1 API
-// !!! The MatchV1 API requires Production API Key
+// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API
+// !!! The MatchV1 API requires a Production API Key
 valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
-    // Get the puuid by RiotID, then fetch all the matches of the player
+    // Get the puuid by RiotID, then fetch all of the player's matches
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
-        console.log(matches); // this should print the matches of the account
+        console.log(matches); // this should print the account's matches
     })
 });
 ```

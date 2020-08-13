@@ -1,22 +1,19 @@
-import axios, { AxiosInstance } from 'axios';
-
+import axios from 'axios';
 import { Region } from '../types/region';
-
+import Regions from './Regions';
 import AccountV1 from './riot/ACCOUNT-V1';
 import ContentV1 from './valorant/VAL-CONTENT-V1';
 import MatchV1 from './valorant/VAL-MATCH-V1';
-import Regions from './Regions';
 
 class API {
     public AccountV1 = new AccountV1(this);
     public ContentV1 = new ContentV1(this);
     public MatchV1 = new MatchV1(this);
 
-    private region: Region;
-    private accountRegion: Region;
-
+    #accountRegion: Region;
     #key: string = '';
     #originalRegion: Region | null = null;
+    #region: Region;
 
     /**
      * @constructor
@@ -35,18 +32,18 @@ class API {
         }
 
         if (accountRegion === undefined) {
-            this.accountRegion = Regions.AMERICAS;
+            this.#accountRegion = Regions.AMERICAS;
         } else {
-            this.accountRegion = accountRegion;
+            this.#accountRegion = accountRegion;
         }
 
-        this.region = region;
+        this.#region = region;
         this.#key = key;
     }
 
     public get request() {
         const request = axios.create({
-            baseURL: `https://${this.region.endpoint}.api.riotgames.com/`,
+            baseURL: `https://${this.#region.endpoint}.api.riotgames.com/`,
             headers: {
                 'X-Riot-Token': this.#key,
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -56,7 +53,7 @@ class API {
         request.interceptors.response.use(
             (response) => {
                 if (this.#originalRegion !== null) {
-                    this.region = this.#originalRegion;
+                    this.#region = this.#originalRegion;
                     this.#originalRegion = null;
                 }
 
@@ -64,7 +61,7 @@ class API {
             },
             (error) => {
                 if (this.#originalRegion !== null) {
-                    this.region = this.#originalRegion;
+                    this.#region = this.#originalRegion;
                     this.#originalRegion = null;
                 }
 
@@ -82,27 +79,23 @@ class API {
     }
 
     public setTempRegion(region: Region): this {
-        this.#originalRegion = this.region;
-        this.region = region;
+        this.#originalRegion = this.#region;
+        this.#region = region;
         return this;
     }
 
     /**
-     * Get the target region when querying the API
-     *
-     * @return {Region} the defined region
+     * The target region when querying the API
      */
-    public getRegion(): Region {
-        return this.region;
+    public get region(): Region {
+        return this.#region;
     }
 
     /**
-     * Get the target region when querying the API
-     *
-     * @return {Region} the defined region
+     * The target region when querying the API
      */
-    public getAccountRegion(): Region {
-        return this.accountRegion;
+    public get accountRegion(): Region {
+        return this.#accountRegion;
     }
 }
 
