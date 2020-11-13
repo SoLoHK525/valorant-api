@@ -1,6 +1,6 @@
 import { API } from '../..';
 import { Locale } from '../../types/alias';
-import { ContentDTo } from '../../types/valorant/VAL-CONTENT-V1';
+import { ContentDto } from '../../types/valorant/VAL-CONTENT-V1';
 import Controller from '../Controller';
 
 export default class ContentV1 extends Controller {
@@ -19,7 +19,7 @@ export default class ContentV1 extends Controller {
      * {@link https://developer.riotgames.com/apis#val-content-v1/GET_getContent Reference of VAL-CONTENT-V1}
      */
 
-    getContent(locale?: Locale): Promise<ContentDTo> {
+    getContent(locale?: Locale): Promise<ContentDto> {
         let url = '/val/content/v1/contents';
 
         if (locale !== undefined) {

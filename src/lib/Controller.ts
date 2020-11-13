@@ -13,6 +13,10 @@ abstract class Controller {
     protected get instance() {
         return this.#instance;
     }
+
+    protected get accountRequest() {
+        return this.#instance.accountRequest;
+    }
 }
 
 export default Controller;

@@ -4,7 +4,7 @@ import { LocalizedNamesDto } from '../general';
  * Response of the Content V1 Endpoint
  *
  */
-interface ContentDTo {
+interface ContentDto {
     /**
      * API Version
      */
@@ -93,4 +93,4 @@ interface ContentItemDto {
     assetName: string;
 }
 
-export { ContentDTo, ContentItemDto };
+export { ContentDto, ContentItemDto };

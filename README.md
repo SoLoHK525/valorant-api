@@ -19,40 +19,60 @@ npm i node-valorant-api
 ## Supported APIs:
 > All API methods will return a promise containing the return data. For detailed information about the Promise API, please refer to https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-> ### [**ACCOUNT-V1**](https://developer.riotgames.com/apis#account-v1)
-- [getAccountByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getByPuuid)
-- [getAccountByRiotID(gameName, tagLine)](https://developer.riotgames.com/apis#account-v1/GET_getByRiotId)
-- [getActiveShardByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getActiveShard)
+[**ACCOUNT-V1**](https://developer.riotgames.com/apis#account-v1)
 
-> ### [**VAL-CONTENT-V1**](https://developer.riotgames.com/apis#val-content-v1)
-- [getContent(locale)](https://developer.riotgames.com/apis#val-content-v1/GET_getContent)
+| Method | Description |
+--------- | -------- |
+[getAccountByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getByPuuid) | Get account by puuid
+[getAccountByRiotID(gameName, tagLine)](https://developer.riotgames.com/apis#account-v1/GET_getByRiotId) | Get account by riot id
+[getActiveShardByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getActiveShard) | Get active shard for a player
 
-> ### [**VAL-MATCH-V1**](https://developer.riotgames.com/apis#val-match-v1)
-- [getMatchById(matchid)](https://developer.riotgames.com/apis#val-match-v1/GET_getMatch)
-- [getMatchesByPuuid(puuid)](https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist)
+[**VAL-CONTENT-V1**](https://developer.riotgames.com/apis#val-content-v1)
+
+---
+
+| Method | Description |
+--------- | -------- |
+[getContent(locale)](https://developer.riotgames.com/apis#val-content-v1/GET_getContent) | Get content optionally filtered by locale
+
+---
+
+[**VAL-MATCH-V1**](https://developer.riotgames.com/apis#val-match-v1)
+
+| Method | Description |
+--------- | -------- |
+[getMatchById(matchid)](https://developer.riotgames.com/apis#val-match-v1/GET_getMatch) | Get match by id
+[getMatchesByPuuid(puuid)](https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist) | Get matchlist for games played by puuid
+[getRecentMatches(queue)](https://developer.riotgames.com/apis#val-match-v1/GET_getRecent) | Get recent matches
+
 
 ## Supported regions:
 
-> ### Valorant API:
-- APAC
-- BR
-- EU
-- KR
-- LATAM
-- NA
-- PBE1
+### Valorant API:
+| Region | Endpoint |
+| --------- | -------- |
+| APAC | ap.api.riotgames.com |
+| BR | br.api.riotgames.com |
+| EU | eu.api.riotgames.com |
+| KR | kr.api.riotgames.com |
+| LATAM | latam.api.riotgames.com |
+| NA | na.api.riotgames.com |
+| PBE1 | pbe1.api.riotgames.com |
 
-> ### Account API:
-- ASIA
-- AMERICAS
-- EUROPE
+### Account API:
+
+| Region | Endpoint |
+| --------- | -------- |
+| ASIA | asia.api.riotgames.com |
+| AMERICAS | americas.api.riotgames.com |
+| EUROPE | europe.api.riotgames.com |
 
 
 ## Usage
 
 ##### CommonJs:
 ```js
-const { API, Regions, Locales } = require("node-valorant-api");
+const { API, Regions, Locales, Queue } = require("./index");
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
@@ -68,16 +88,34 @@ valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
 // Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API
 // !!! The MatchV1 API requires a Production API Key
 valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
+    
     // Get the puuid by RiotID, then fetch all of the player's matches
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
         console.log(matches); // this should print the account's matches
     })
 });
+
+/**
+ * Example usage of the VAL-STATUS-V1 API
+ * https://developer.riotgames.com/apis#val-status-v1/GET_getPlatformData
+ */
+valorant.StatusV1.getPlatformData().then(data => {
+    console.log(data);
+});
+
+/**
+ * Example usage of the VAL-MATCH-V1 API
+ * Queue: "competitive", "unranked", "spikerush"
+ * https://developer.riotgames.com/apis#val-status-v1/GET_getPlatformData
+ */
+valorant.MatchV1.getRecentMatches(Queue.Competitive).then(data => {
+    console.log(data);
+})
 ```
 
 ##### Typescript:
 ```ts
-import { API, Regions, Locales } from "node-valorant-api";
+import { API, Regions, Locales, Queue } from "node-valorant-api";
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
@@ -98,6 +136,23 @@ valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
         console.log(matches); // this should print the account's matches
     })
 });
+
+/**
+ * Example usage of the VAL-STATUS-V1 API
+ * https://developer.riotgames.com/apis#val-status-v1/GET_getPlatformData
+ */
+valorant.StatusV1.getPlatformData().then(data => {
+    console.log(data);
+});
+
+/**
+ * Example usage of the VAL-MATCH-V1 API
+ * Queue: "competitive", "unranked", "spikerush"
+ * https://developer.riotgames.com/apis#val-status-v1/GET_getPlatformData
+ */
+valorant.MatchV1.getRecentMatches(Queue.Competitive).then(data => {
+    console.log(data);
+})
 ```
 
 [npm-image]: https://img.shields.io/npm/v/node-valorant-api.svg

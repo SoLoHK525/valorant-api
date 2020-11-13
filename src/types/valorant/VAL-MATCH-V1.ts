@@ -466,6 +466,11 @@ interface RoundResultDto {
     roundResultCode: string;
 }
 
+interface RecentMatchesDto {
+    currentTime: long;
+    matchIds: string[];
+}
+
 export {
     MatchesMatchDto,
     MatchlistDto,
@@ -482,4 +487,5 @@ export {
     AbilityDto,
     TeamDto,
     RoundResultDto,
+    RecentMatchesDto,
 };

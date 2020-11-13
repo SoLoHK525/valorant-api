@@ -86,7 +86,7 @@ class AccountV1 extends Controller {
     async getAccountByPuuid(puuid: string): Promise<AccountDto> {
         puuid = encodeURIComponent(puuid);
 
-        const request = this.request.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
+        const request = this.accountRequest.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
 
         const account = await request;
         return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
@@ -96,9 +96,9 @@ class AccountV1 extends Controller {
         gameName = encodeURIComponent(gameName);
         tagLine = encodeURIComponent(tagLine);
 
-        const request = this.instance
-            .setTempRegion(this.instance.accountRegion)
-            .request.get(`/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`) as Promise<AccountDto>;
+        const request = this.accountRequest.get(
+            `/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`,
+        ) as Promise<AccountDto>;
 
         const account = await request;
         return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
@@ -107,7 +107,7 @@ class AccountV1 extends Controller {
     getActiveShardByPuuid(puuid: string): Promise<ActiveShardDto> {
         puuid = encodeURIComponent(puuid);
 
-        return this.request.get(`/riot/account/v1/active-shards/by-game/val/by-puuid/${puuid}`) as Promise<
+        return this.accountRequest.get(`/riot/account/v1/active-shards/by-game/val/by-puuid/${puuid}`) as Promise<
             ActiveShardDto
         >;
     }

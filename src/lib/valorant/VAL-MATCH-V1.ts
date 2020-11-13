@@ -1,6 +1,6 @@
-import { API } from '../..';
-import { MatchlistDto, MatchesMatchDto } from '../../types/valorant/VAL-MATCH-V1';
+import { MatchlistDto, MatchesMatchDto, RecentMatchesDto } from '../../types/valorant/VAL-MATCH-V1';
 import Controller from '../Controller';
+import Queue from '../Queue';
 
 export default class MatchV1 extends Controller {
     /**
@@ -41,5 +41,23 @@ export default class MatchV1 extends Controller {
         puuid = encodeURIComponent(puuid);
 
         return this.request.get(`/val/match/v1/matchlists/by-puuid/${puuid}`);
+    }
+
+    /**
+     * Fetch recent completed matches of a queue type
+     *
+     * API Endpoint: `GET /val/match/v1/recent-matches/by-queue/{queue}`
+     *
+     * @description Get recent matches by queue type
+     *
+     * @remark
+     * **`Requires Production API Key`**
+     *
+     * @returns A promise containing the VAL-MATCH-V1 API Response: `{@link RecentMatchesDto}`
+     *
+     * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getRecent Reference of VAL-MATCH-V1}
+     */
+    getRecentMatches(queue: Queue): Promise<RecentMatchesDto> {
+        return this.request.get(`/val/match/v1/recent-matches/by-queue/${queue}`);
     }
 }
