@@ -1,6 +1,4 @@
-import API from './lib/API';
-import Locales from './lib/Locales';
-import Regions from './lib/Regions';
-import Queue from './lib/Queue';
-
-export { API, Regions, Locales, Queue };
+export * from './lib/API';
+export * from './lib/Locales';
+export * from './lib/Regions';
+export * from './lib/Queue';

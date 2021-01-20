@@ -1,5 +1,3 @@
-interface Region {
+export interface Region {
     endpoint: string;
 }
-
-export { Region };

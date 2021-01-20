@@ -1,7 +1,7 @@
 import { PlatformDataDto } from '../../types/valorant/VAL-STATUS-V1';
 import Controller from '../Controller';
 
-export default class MatchV1 extends Controller {
+export class StatusV1 extends Controller {
     /**
      * Fetch VALORANT status by the given platform
      *
@@ -10,7 +10,7 @@ export default class MatchV1 extends Controller {
      * @description Get match by id
      *
      * @remark
-     * **`Requires Production API Key`**
+     * **`Requires Development API Key`**
      *
      * @returns A promise containing the VAL-STATUS-V1 API Response: `{@link PlatformDataDto}`
      *

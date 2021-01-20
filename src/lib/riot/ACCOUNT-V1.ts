@@ -1,10 +1,9 @@
 import { Region } from '../../types/region';
 import { AccountDto, ActiveShardDto } from '../../types/riot/ACCOUNT-V1';
 import Controller from '../Controller';
-import Regions from '../Regions';
-import Account from '../Wrapper/account';
+import { Regions } from '../Regions';
 
-interface AccountV1 {
+export interface AccountV1 {
     /**
      * Fetch account By Puuid
      *
@@ -41,7 +40,7 @@ interface AccountV1 {
      *
      * {@link https://developer.riotgames.com/apis#account-v1/GET_getByRiotId Reference of ACCOUNT-V1}
      */
-    getAccountByRiotID(gameName: string, tagLine: string): Promise<Account>;
+    getAccountByRiotID(gameName: string, tagLine: string): Promise<AccountDto>;
 
     /**
      * Fetch active shard by Puuid
@@ -82,35 +81,27 @@ const regionToAccountRegion = (region: Region): Region => {
     }
 };
 
-class AccountV1 extends Controller {
-    async getAccountByPuuid(puuid: string): Promise<AccountDto> {
+export class AccountV1 extends Controller {
+    getAccountByPuuid(puuid: string): Promise<AccountDto> {
         puuid = encodeURIComponent(puuid);
 
-        const request = this.accountRequest.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
-
-        const account = await request;
-        return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
+        return this.accountRequest.get(`/riot/account/v1/accounts/by-puuid/${puuid}`) as Promise<AccountDto>;
     }
 
-    async getAccountByRiotID(gameName: string, tagLine: string): Promise<Account> {
+    getAccountByRiotID(gameName: string, tagLine: string): Promise<AccountDto> {
         gameName = encodeURIComponent(gameName);
         tagLine = encodeURIComponent(tagLine);
 
-        const request = this.accountRequest.get(
+        return this.accountRequest.get(
             `/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`,
         ) as Promise<AccountDto>;
-
-        const account = await request;
-        return new Account(this.instance, account.puuid, account.gameName, account.tagLine);
     }
 
     getActiveShardByPuuid(puuid: string): Promise<ActiveShardDto> {
         puuid = encodeURIComponent(puuid);
 
-        return this.accountRequest.get(`/riot/account/v1/active-shards/by-game/val/by-puuid/${puuid}`) as Promise<
-            ActiveShardDto
-        >;
+        return this.accountRequest.get(
+            `/riot/account/v1/active-shards/by-game/val/by-puuid/${puuid}`,
+        ) as Promise<ActiveShardDto>;
     }
 }
-
-export default AccountV1;

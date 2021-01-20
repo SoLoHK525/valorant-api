@@ -1,8 +1,8 @@
 import { MatchlistDto, MatchesMatchDto, RecentMatchesDto } from '../../types/valorant/VAL-MATCH-V1';
 import Controller from '../Controller';
-import Queue from '../Queue';
+import { Queue } from '../Queue';
 
-export default class MatchV1 extends Controller {
+export class MatchV1 extends Controller {
     /**
      * Fetch match by the match id
      *

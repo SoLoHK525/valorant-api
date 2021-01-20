@@ -1,4 +1,4 @@
-type ResponseErrors = {
+export type ResponseErrors = {
     400: 'Bad Request';
     401: 'Unauthorized';
     403: 'Forbidden';
@@ -12,7 +12,7 @@ type ResponseErrors = {
     504: 'Gateway timeout';
 };
 
-interface LocalizedNamesDto {
+export interface LocalizedNamesDto {
     'ar-AE': string;
     'de-DE': string;
     'en-GB': string;
@@ -33,5 +33,3 @@ interface LocalizedNamesDto {
     'zh-CN': string;
     'zh-TW': string;
 }
-
-export { ResponseErrors, LocalizedNamesDto };

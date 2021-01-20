@@ -1,6 +1,6 @@
 import { Locale } from '../types/alias';
 
-class Locales {
+export class Locales {
     public static 'ar-AE': Locale = 'ar-AE';
     public static 'de-DE': Locale = 'de-DE';
     public static 'en-GB': Locale = 'en-GB';
@@ -21,5 +21,3 @@ class Locales {
     public static 'zh-CN': Locale = 'zh-CN';
     public static 'zh-TW': Locale = 'zh-TW';
 }
-
-export default Locales;
