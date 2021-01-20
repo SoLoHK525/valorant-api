@@ -1,10 +1,63 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Region } from '../types/region';
 import Regions from './Regions';
 import AccountV1 from './riot/ACCOUNT-V1';
 import ContentV1 from './valorant/VAL-CONTENT-V1';
 import MatchV1 from './valorant/VAL-MATCH-V1';
 import StatusV1 from './valorant/VAL-STATUS-V1';
+
+const ResponseInterpreter = (response: AxiosResponse) => {
+    return response.data;
+}
+
+export interface RiotAPIError {
+    request: {
+        method: string;
+        path: string;
+        header: string;
+        url: string;
+    },
+    status_code: number;
+    message: string;
+}
+
+const ErrorInterpreter = (error: any): Promise<RiotAPIError> => {
+    const { method, path, _header, res } = error.request;
+    switch (error.response.status) {
+        case 400:
+        case 401:
+        case 403:
+        case 404:
+        case 405:
+        case 415:
+        case 429:
+        case 500:
+        case 502:
+        case 503:
+        case 504:
+            return Promise.reject({
+                request: {
+                    method,
+                    path,
+                    header: _header,
+                    url: res.responseUrl
+                },
+                status_code: error.response.status,
+                message: error.response.data.status.message,
+            });
+        default:
+            return Promise.reject({
+                request: {
+                    method,
+                    path,
+                    header: _header,
+                    url: res.responseUrl
+                },
+                status_code: error.response.status,
+                message: error.response?.data?.status?.message || "Unknown Error",
+            });
+    }
+}
 
 class API {
     public AccountV1 = new AccountV1(this);
@@ -52,20 +105,7 @@ class API {
             },
         });
 
-        request.interceptors.response.use(
-            (response) => {
-                return response.data;
-            },
-            (error) => {
-                if (error.response?.data?.status) {
-                    console.error(
-                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message}\nPlease refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
-                    );
-                }
-
-                throw error;
-            },
-        );
+        request.interceptors.response.use(ResponseInterpreter, ErrorInterpreter);
 
         return request;
     }
@@ -79,20 +119,7 @@ class API {
             },
         });
 
-        request.interceptors.response.use(
-            (response) => {
-                return response.data;
-            },
-            (error) => {
-                if (error.response?.data?.status) {
-                    console.error(
-                        `Server rejected request: ${error.response.data.status.status_code} ${error.response.data.status.message}\nPlease refer to the Riot API Documentation for the error code https://developer.riotgames.com/docs/portal#web-apis_response-codes`,
-                    );
-                }
-
-                throw error;
-            },
-        );
+        request.interceptors.response.use(ResponseInterpreter, ErrorInterpreter);
 
         return request;
     }
