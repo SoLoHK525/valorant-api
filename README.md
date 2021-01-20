@@ -12,9 +12,16 @@ A NodeJs wrapper for the Riot VALORANT API
 
 ## Installation
 
+npm:
 ```bash
 npm i node-valorant-api
 ```
+
+yarn:
+```bash
+yarn add node-valorant-api
+```
+
 
 ## Supported APIs:
 > All API methods will return a promise containing the return data. For detailed information about the Promise API, please refer to https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise
