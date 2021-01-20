@@ -34,13 +34,14 @@ yarn add node-valorant-api
 [getAccountByRiotID(gameName, tagLine)](https://developer.riotgames.com/apis#account-v1/GET_getByRiotId) | Get account by riot id
 [getActiveShardByPuuid(puuid)](https://developer.riotgames.com/apis#account-v1/GET_getActiveShard) | Get active shard for a player
 
+---
+
 [**VAL-CONTENT-V1**](https://developer.riotgames.com/apis#val-content-v1)
 
----
 
 | Method | Description |
 --------- | -------- |
-[getContent(locale)](https://developer.riotgames.com/apis#val-content-v1/GET_getContent) | Get content optionally filtered by locale
+[getContent(locale?)](https://developer.riotgames.com/apis#val-content-v1/GET_getContent) | Get content optionally filtered by locale
 
 ---
 
@@ -52,10 +53,18 @@ yarn add node-valorant-api
 [getMatchesByPuuid(puuid)](https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist) | Get matchlist for games played by puuid
 [getRecentMatches(queue)](https://developer.riotgames.com/apis#val-match-v1/GET_getRecent) | Get recent matches
 
+---
+
+[**VAL-RANKED-V1**](https://developer.riotgames.com/apis#val-ranked-v1)
+
+| Method | Description |
+--------- | -------- |
+[getLeaderboardsByAct(actId, size?, startIndex?)](https://developer.riotgames.com/apis#val-ranked-v1/GET_getLeaderboard) | Get leaderboard for the competitive queue
+
 
 ## Supported regions:
 
-### Valorant API:
+#### Valorant API:
 | Region | Endpoint |
 | --------- | -------- |
 | APAC | ap.api.riotgames.com |
@@ -66,7 +75,7 @@ yarn add node-valorant-api
 | NA | na.api.riotgames.com |
 | PBE1 | pbe1.api.riotgames.com |
 
-### Account API:
+#### Account API:
 
 | Region | Endpoint |
 | --------- | -------- |
@@ -74,12 +83,11 @@ yarn add node-valorant-api
 | AMERICAS | americas.api.riotgames.com |
 | EUROPE | europe.api.riotgames.com |
 
-
 ## Usage
 
 ##### CommonJs:
 ```js
-const { API, Regions, Locales, Queue } = require("./index");
+const { API, Regions, Locales, Queue } = require("node-valorant-api");
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
@@ -89,16 +97,13 @@ const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instan
 
 // Example usage of the VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
-    console.log(content.characters.map(char => { return char.name })); //print all the character name in en-US
+    console.log(content.characters.map(char => { return char.name }));
 });
 
-// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API
-// !!! The MatchV1 API requires a Production API Key
+// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API !!! The MatchV1 API requires a Production API Key
 valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
-    
-    // Get the puuid by RiotID, then fetch all of the player's matches
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
-        console.log(matches); // this should print the account's matches
+        console.log(matches);
     })
 });
 
@@ -122,7 +127,7 @@ valorant.MatchV1.getRecentMatches(Queue.Competitive).then(data => {
 
 ##### Typescript:
 ```ts
-import { API, Regions, Locales, Queue } from "node-valorant-api";
+import { API, Regions, Locales, Queue, RiotAPIError } from "node-valorant-api";
 
 const APIKey = "RGAPI-5aca53b4-d92b-11ea-87d0-0242ac130003"; // Your API Key
 
@@ -132,15 +137,16 @@ const valorant = new API(Regions.NA, APIKey, Regions.AMERICAS); // An API instan
 
 // Example usage of the VAL-CONTENT-V1 API
 valorant.ContentV1.getContent(Locales["en-US"]).then(content => {
-    console.log(content.characters.map(char => { return char.name })); //print all the character name in en-US
-});
+    console.log(content.characters.map(char => { return char.name }));
+}).catch((error: RiotAPIError) => {
+    // Error handling
+    console.log(error.status_code);
+})
 
-// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API
-// !!! The MatchV1 API requires a Production API Key
+// Example usage of the ACCOUNT-V1 and VAL-MATCH-V1 API !!! The MatchV1 API requires a Production API Key
 valorant.AccountV1.getAccountByRiotID("SoLo", "HK1").then(account => {
-    // Get the puuid by RiotID, then fetch all of the player's matches
     valorant.MatchV1.getMatchesByPuuid(account.puuid).then(matches => {
-        console.log(matches); // this should print the account's matches
+        console.log(matches);
     })
 });
 
@@ -161,6 +167,24 @@ valorant.MatchV1.getRecentMatches(Queue.Competitive).then(data => {
     console.log(data);
 })
 ```
+
+## Error Handling
+The wrapper will return a Promise rejection with `RiotAPIError` which can be used to handle Rate Limiting (HTTP Status 429),etc. **Every request should include a catch block for handling error.**
+
+`RiotAPIError` has following properties:
+```ts
+interface RiotAPIError {
+    request: {
+        method: string; // Request Method
+        path: string; // Request path
+        header: string; // Request headers
+        url: string; // Full Request URL
+    },
+    status_code: number; // Status Code, see https://developer.riotgames.com/docs/portal#web-apis_response-codes
+    message: string; // Error message from Riot API
+}
+```
+
 
 [npm-image]: https://img.shields.io/npm/v/node-valorant-api.svg
 [npm-url]: https://npmjs.org/package/node-valorant-api
