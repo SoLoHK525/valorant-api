@@ -1,9 +1,7 @@
-type int = number;
-type long = number;
-type float = number;
+export type int = number;
+export type long = number;
+export type float = number;
 
-type puuid = string;
+export type puuid = string;
 
-type Locale = string;
-
-export { int, long, float, puuid, Locale };
+export type Locale = string;

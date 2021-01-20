@@ -1,6 +1,6 @@
 import { Region } from '../types/region';
 
-class Regions {
+export class Regions {
     public static APAC: Region = {
         endpoint: 'ap',
     };
@@ -44,5 +44,3 @@ class Regions {
         endpoint: 'europe',
     };
 }
-
-export default Regions;

@@ -5,7 +5,7 @@ import { int, long, float, puuid } from '../alias';
  *
  * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatch reference}
  */
-interface MatchesMatchDto {
+export interface MatchesMatchDto {
     /**
      * List of matches
      */
@@ -32,7 +32,7 @@ interface MatchesMatchDto {
  *
  * {@link https://developer.riotgames.com/apis#val-match-v1/GET_getMatchlist reference}
  */
-interface MatchlistDto {
+export interface MatchlistDto {
     /**
      * Player UUID
      */
@@ -44,13 +44,13 @@ interface MatchlistDto {
     history: MatchListsMatchDto[];
 }
 
-interface MatchListsMatchDto {
+export interface MatchListsMatchDto {
     matchId: string;
     gameStartTime: long;
     teamId: string;
 }
 
-interface MatchInfoDto {
+export interface MatchInfoDto {
     /**
      * Match ID
      */
@@ -107,7 +107,7 @@ interface MatchInfoDto {
     seasonId: string;
 }
 
-interface PlayerDto {
+export interface PlayerDto {
     /**
      * Player UUID
      */
@@ -149,7 +149,7 @@ interface PlayerDto {
     playerTitle: string;
 }
 
-interface PlayerStatsDto {
+export interface PlayerStatsDto {
     /**
      * Player UUID
      */
@@ -181,7 +181,7 @@ interface PlayerStatsDto {
     ability: AbilityDto;
 }
 
-interface KillDto {
+export interface KillDto {
     /**
      * @type int
      * Game time which the kill occurs
@@ -227,7 +227,7 @@ interface KillDto {
     finishingDamage: FinishingDamageDto;
 }
 
-interface LocationDto {
+export interface LocationDto {
     /**
      * @type int
      * X-coordinate of the location
@@ -241,7 +241,7 @@ interface LocationDto {
     y: int;
 }
 
-interface PlayerLocationsDto {
+export interface PlayerLocationsDto {
     /**
      * Player UUID
      */
@@ -259,7 +259,7 @@ interface PlayerLocationsDto {
     location: LocationDto;
 }
 
-interface FinishingDamageDto {
+export interface FinishingDamageDto {
     /**
      * Type of the finishing damage of the kill
      */
@@ -276,7 +276,7 @@ interface FinishingDamageDto {
     isSecondaryFireMode: boolean;
 }
 
-interface DamageDto {
+export interface DamageDto {
     /**
      * Receiver's Player UUID (PUUID)
      * @type PUUID
@@ -308,7 +308,7 @@ interface DamageDto {
     headshots: int;
 }
 
-interface EconomyDto {
+export interface EconomyDto {
     /**
      * Value of the player loadout
      * @type int
@@ -340,7 +340,7 @@ interface EconomyDto {
     spent: int;
 }
 
-interface AbilityDto {
+export interface AbilityDto {
     /**
      * Name of the grenade effect
      */
@@ -362,7 +362,7 @@ interface AbilityDto {
     ultimateEffects: string;
 }
 
-interface TeamDto {
+export interface TeamDto {
     /**
      * Team ID
      */
@@ -384,7 +384,7 @@ interface TeamDto {
     roundsWon: int;
 }
 
-interface RoundResultDto {
+export interface RoundResultDto {
     /**
      * Round number of the result
      * @type int
@@ -466,26 +466,7 @@ interface RoundResultDto {
     roundResultCode: string;
 }
 
-interface RecentMatchesDto {
+export interface RecentMatchesDto {
     currentTime: long;
     matchIds: string[];
 }
-
-export {
-    MatchesMatchDto,
-    MatchlistDto,
-    MatchListsMatchDto,
-    MatchInfoDto,
-    PlayerDto,
-    PlayerStatsDto,
-    KillDto,
-    LocationDto,
-    PlayerLocationsDto,
-    FinishingDamageDto,
-    DamageDto,
-    EconomyDto,
-    AbilityDto,
-    TeamDto,
-    RoundResultDto,
-    RecentMatchesDto,
-};

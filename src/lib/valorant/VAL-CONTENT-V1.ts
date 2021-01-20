@@ -2,8 +2,9 @@ import { API } from '../..';
 import { Locale } from '../../types/alias';
 import { ContentDto } from '../../types/valorant/VAL-CONTENT-V1';
 import Controller from '../Controller';
+import qs from 'qs';
 
-export default class ContentV1 extends Controller {
+export class ContentV1 extends Controller {
     /**
      * Fetch all the content that VALORANT offers
      *
@@ -23,7 +24,7 @@ export default class ContentV1 extends Controller {
         let url = '/val/content/v1/contents';
 
         if (locale !== undefined) {
-            url += `?locale=${encodeURIComponent(locale)}`;
+            url += '?' + qs.stringify(locale);
         }
 
         return this.request.get(url);

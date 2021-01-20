@@ -4,7 +4,7 @@ import { LocalizedNamesDto } from '../general';
  * Response of the Content V1 Endpoint
  *
  */
-interface ContentDto {
+export interface ContentDto {
     /**
      * API Version
      */
@@ -74,9 +74,14 @@ interface ContentDto {
      * Player Title List
      */
     playerTitles: ContentItemDto[];
+
+    /**
+     * Acts List
+     */
+    acts: ActDto[];
 }
 
-interface ContentItemDto {
+export interface ContentItemDto {
     /**
      * Name of the item
      */
@@ -93,4 +98,9 @@ interface ContentItemDto {
     assetName: string;
 }
 
-export { ContentDto, ContentItemDto };
+export interface ActDto {
+    name: string;
+    localizedNames: LocalizedNamesDto;
+    id: string;
+    isActive: boolean;
+}

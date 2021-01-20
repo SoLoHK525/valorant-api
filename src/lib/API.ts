@@ -1,14 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import { Region } from '../types/region';
-import Regions from './Regions';
-import AccountV1 from './riot/ACCOUNT-V1';
-import ContentV1 from './valorant/VAL-CONTENT-V1';
-import MatchV1 from './valorant/VAL-MATCH-V1';
-import StatusV1 from './valorant/VAL-STATUS-V1';
+import { Regions } from './Regions';
+
+import { AccountV1 } from './riot';
+import { ContentV1, MatchV1, RankedV1, StatusV1 } from './valorant';
 
 const ResponseInterpreter = (response: AxiosResponse) => {
     return response.data;
-}
+};
 
 export interface RiotAPIError {
     request: {
@@ -16,7 +15,7 @@ export interface RiotAPIError {
         path: string;
         header: string;
         url: string;
-    },
+    };
     status_code: number;
     message: string;
 }
@@ -40,7 +39,7 @@ const ErrorInterpreter = (error: any): Promise<RiotAPIError> => {
                     method,
                     path,
                     header: _header,
-                    url: res.responseUrl
+                    url: res.responseUrl,
                 },
                 status_code: error.response.status,
                 message: error.response.data.status.message,
@@ -51,19 +50,20 @@ const ErrorInterpreter = (error: any): Promise<RiotAPIError> => {
                     method,
                     path,
                     header: _header,
-                    url: res.responseUrl
+                    url: res.responseUrl,
                 },
                 status_code: error.response.status,
-                message: error.response?.data?.status?.message || "Unknown Error",
+                message: error.response?.data?.status?.message || 'Unknown Error',
             });
     }
-}
+};
 
-class API {
+export class API {
     public AccountV1 = new AccountV1(this);
     public ContentV1 = new ContentV1(this);
     public MatchV1 = new MatchV1(this);
     public StatusV1 = new StatusV1(this);
+    public RankedV1 = new RankedV1(this);
 
     #accountRegion: Region;
     #key: string = '';
@@ -138,5 +138,3 @@ class API {
         return this.#accountRegion;
     }
 }
-
-export default API;
